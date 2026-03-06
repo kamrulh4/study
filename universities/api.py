@@ -67,3 +67,24 @@ def delete_university(request, university_id: int):
 @api.get("/rankings", response=List[RankingSchema], auth=None)
 def list_rankings(request):
     return Ranking.objects.all()
+
+@api.post("/rankings", response={201: RankingSchema})
+def create_ranking(request, data: RankingSchema):
+    # Exclude ID for creation
+    ranking_data = data.dict(exclude={'id'})
+    ranking = Ranking.objects.create(**ranking_data)
+    return 201, ranking
+
+@api.put("/rankings/{ranking_id}", response=RankingSchema)
+def update_ranking(request, ranking_id: int, data: RankingSchema):
+    ranking = get_object_or_404(Ranking, id=ranking_id)
+    for attr, value in data.dict(exclude_unset=True, exclude={'id'}).items():
+        setattr(ranking, attr, value)
+    ranking.save()
+    return ranking
+
+@api.delete("/rankings/{ranking_id}", response={204: None})
+def delete_ranking(request, ranking_id: int):
+    ranking = get_object_or_404(Ranking, id=ranking_id)
+    ranking.delete()
+    return 204, None
