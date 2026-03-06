@@ -1,12 +1,11 @@
-from django.test import TestCase
+from django.test import TestCase, Client
 from django.urls import reverse
-from rest_framework.test import APIClient
-from rest_framework import status
 from .models import University, Ranking
+import json
 
 class UniversityAPITests(TestCase):
     def setUp(self):
-        self.client = APIClient()
+        self.client = Client()
         self.university = University.objects.create(
             name="Test Uni",
             country="Test Country",
@@ -20,14 +19,16 @@ class UniversityAPITests(TestCase):
         )
 
     def test_get_universities(self):
-        url = reverse('university-list')
-        response = self.client.get(url)
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
-        # response.data is a list when pagination is off
-        self.assertTrue(len(response.data) >= 1)
+        # In Ninja, the URL might not have a name by default if not specified
+        # But we can call the endpoint directly or add names to routes
+        response = self.client.get('/api/v1/universities')
+        self.assertEqual(response.status_code, 200)
+        data = json.loads(response.content)
+        self.assertTrue(len(data) >= 1)
+        self.assertEqual(data[0]['name'], "Test Uni")
 
     def test_get_rankings(self):
-        url = reverse('ranking-list')
-        response = self.client.get(url)
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertTrue(len(response.data) >= 1)
+        response = self.client.get('/api/v1/rankings')
+        self.assertEqual(response.status_code, 200)
+        data = json.loads(response.content)
+        self.assertTrue(len(data) >= 1)
