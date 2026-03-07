@@ -15,14 +15,16 @@ While Django REST Framework (DRF) is the industry standard, **Django Ninja** was
 - **Performance**: Django Ninja is significantly faster than DRF due to its async support and more efficient serialization processes. Tests show Ninja can be up to 1.5x–2x faster in JSON serialization.
 - **Ease of Documentation**: Ninja automatically generates OpenAPI (Swagger) documentation without additional configuration, ensuring the API documentation is always in sync with the code.
 
-### 2.2 Database: PostgreSQL
-**PostgreSQL** was chosen over SQLite or MySQL for several reasons:
+### 2.2 Database: PostgreSQL 18
+**PostgreSQL 18** was selected over SQLite for several reasons:
+- **Cutting-edge Features**: Using the latest Postgres 18 ensures support for modern SQL features and performance optimizations.
 - **ACID Compliance**: Ensures data integrity even in the event of hardware failure or system crashes.
-- **Advanced Data Types**: PostgreSQL's superior support for JSONB and complex queries makes it ideal for handling diverse university ranking metrics that might evolve over time.
-- **Scalability**: PostgreSQL is a production-grade database capable of handling millions of records, which is essential for global university datasets.
+- **Scalability**: Capable of handling millions of records, essential for global university datasets.
 
-### 2.3 Containerization: Docker
-To ensure "it works on my machine" consistency across development, testing, and production environments, the project is fully **Dockerized**. An optimized, multi-stage Dockerfile was implemented to minimize image size and improve deployment speed.
+### 2.3 Containerization: Docker & Docker Compose
+To ensure "it works on my machine" consistency, the project is fully **Dockerized** using **Python 3.13**. 
+- **Docker Compose**: A orchestration file is provided to manage the dual-container setup (Web App + Postgres 18), enabling a single-command launch for the entire environment.
+- **Optimization**: A multi-stage Dockerfile minimizes image size and deployment speed.
 
 ---
 
@@ -30,15 +32,13 @@ To ensure "it works on my machine" consistency across development, testing, and 
 
 The application follows a layered architectural pattern, separating concerns between data models, business logic (API endpoints), and data validation (Schemas).
 
-### 3.1 Data Flow Diagram
+### 3.1 Infrastructure Diagram
 ```mermaid
 graph TD
-    Client[Web/Mobile Client] -->|HTTP Request| API[Django Ninja API Layer]
-    API -->|Validation| Pydantic[Pydantic Schemas]
-    Pydantic -->|Valid Data| Logic[Business Logic/Views]
-    Logic -->|ORM Query| DB[(PostgreSQL Database)]
-    DB -->|Result Set| Logic
-    Logic -->|Serialized JSON| Client
+    Client[Web/Mobile Client] -->|Port 8001| Compose[Docker Compose]
+    Compose -->|App Service| Web[Django Ninja App]
+    Compose -->|DB Service| DB[(PostgreSQL 18)]
+    Web -->|ORM| DB
 ```
 
 ### 3.2 Authentication & Security
@@ -49,22 +49,21 @@ The API implements a **Bearer Token** authentication mechanism. All mutation ope
 ## 4. Implementation Challenges & Solutions
 
 ### 4.1 Migrating from DRF to Django Ninja
-The project initially explored DRF but shifted to Django Ninja to take advantage of Pydantic. The challenge was mapping Django models to Pydantic schemas efficiently.
-**Solution**: Used `ModelSchema` from Django Ninja, which introspects the models and automatically generates schemas, significantly reducing boilerplate code.
+The project initially explored DRF but shifted to Django Ninja to take advantage of Pydantic.
+**Solution**: Used `ModelSchema` from Django Ninja, which automatically generates schemas, significantly reducing boilerplate code.
 
 ### 4.2 Handling Production PostgreSQL Integration
-Integrating with a remote production database required careful environment management.
-**Solution**: Implemented `dj-database-url` to parse the `DATABASE_URL` environment variable, allowing the application to switch seamlessly between local development (SQLite) and production (PostgreSQL) without code changes.
+Integrating with remote or local production databases required flexible environment management.
+**Solution**: Implemented `dj-database-url` to parse the `DATABASE_URL` environment variable. In the Docker Compose environment, this connects to the local `db` service automatically.
 
-### 4.3 Docker Image Optimization
-Initial Docker images were over 800MB due to build dependencies.
-**Solution**: Implemented a multi-stage build. The "builder" stage handles compilation of C-extensions (like `psycopg2`), while the "production" stage only includes the final binaries and required runtime libraries, resulting in a 40% reduction in image size.
+### 4.3 Docker Image Optimization & Upgrade
+Initial Docker images were over 800MB and used older Python versions.
+**Solution**: Upgraded to **Python 3.13** and implemented a multi-stage build, resulting in a 40% reduction in image size.
 
 ### 4.4 Scalability & Consistency (Addressing Large Datasets)
-As the university dataset grows, returning all records in a single request would be inefficient.
-- **Pagination**: Implemented `PageNumberPagination` for all list endpoints (`/universities`, `/rankings`). This ensures that the API only transmits a manageable subset of data (default: 50 items per page), drastically reducing bandwidth and latent performance issues.
-- **Global Error Handling**: To ensure the user and front-end clients receive predictable responses even during failures, a global exception handler was implemented. All errors now follow a standard JSON schema: `{"error": true, "message": "...", "code": ...}`.
-- **Industry Standard Status Codes**: The API now specifically handles `Http404` (404 Not Found) and `ValidationError` (422 Unprocessable Entity), ensuring that client-side logic can accurately react to different failure states instead of receiving a generic 500 error.
+- **Pagination**: Implemented `PageNumberPagination` for all list endpoints, defaulting to **50 items per page**.
+- **Global Error Handling**: Standardized JSON schema for all errors: `{"error": true, "message": "...", "code": ...}`.
+- **Industry Standard Status Codes**: Specific handlers for `Http404` (404) and `ValidationError` (422) ensure accurate API feedback.
 
 ---
 
@@ -73,10 +72,10 @@ As the university dataset grows, returning all records in a single request would
 | Requirement | Implementation Detail | Status |
 | :--- | :--- | :--- |
 | **RESTful CRUD** | Implemented `/universities` and `/rankings` with full GET, POST, PUT, DELETE. | 🟢 Ready |
-| **Database** | PostgreSQL integration via `DATABASE_URL` and `psycopg2`. | 🟢 Ready |
-| **Documentation** | Auto-generated Swagger documentation at `/api/v1/docs`. | 🟢 Ready |
-| **Data Source** | Integrated with Kaggle's "World University Rankings" dataset. | 🟢 Ready |
-| **Dockerization** | Multi-stage production-ready Dockerfile provided. | 🟢 Ready |
+| **Database** | PostgreSQL 18 integration via Docker Compose and `DATABASE_URL`. | 🟢 Ready |
+| **Documentation** | Auto-generated Swagger documentation and Markdown-to-PDF ready manual. | 🟢 Ready |
+| **Data Source** | Integrated with data from Times Higher Education & QS World University Rankings. | 🟢 Ready |
+| **Dockerization** | Python 3.13 Multi-stage Dockerfile and Docker Compose provided. | 🟢 Ready |
 | **Authentication** | Bearer Token authentication for write operations. | 🟢 Ready |
 
 ---

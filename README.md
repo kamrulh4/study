@@ -3,24 +3,24 @@
 This branch contains the **Django Ninja** implementation of the Project.
 
 ## 🛠 Tech Stack
-- **Django**: Core framework.
-- **Django Ninja**: Fast API framework with Pydantic schemas.
-- **PostgreSQL**: Production database.
-- **HttpBearer**: Simple token-based authentication.
-- **Native OpenAPI**: Documentation built directly into Ninja.
+- **Django 6.0**: Modern core framework.
+- **Django Ninja**: Fast API with Pydantic and Python 3.13 types.
+- **PostgreSQL 18**: Latest production-grade relational database.
+- **Docker Compose**: Multi-container orchestration.
 
-## 📥 Sample Data Source
-You can find sample CSV data structure here:
-- **Direct CSV Link (Kaggle)**: [cwurData.csv](https://raw.githubusercontent.com/yannick-mieleszko/world-university-rankings/master/cwurData.csv)
-- **Repo Link**: [Kaggle World University Rankings](https://www.kaggle.com/datasets/mylesoneill/world-university-rankings)
+## 📥 Data Sources
+This project uses data derived from:
+- **Times Higher Education (THE)** World University Rankings.
+- **QS World University Rankings** (via Kaggle).
+- [Kaggle Dataset Link](https://www.kaggle.com/datasets/mylesoneill/world-university-rankings)
 
-## 🐳 Production Deployment (Docker)
-This project is production-ready with Docker:
-1. **Build and Run**:
-   ```bash
-   docker build -t university-api .
-   docker run -p 8000:8000 -e DATABASE_URL="your_postgresql_url" university-api
-   ```
+## 🐳 Launch with Docker Compose
+The easiest way to run the entire stack (App + DB) is using Docker Compose:
+```bash
+docker-compose up --build
+```
+- **API URL**: `http://localhost:8001/api/v1/universities`
+- **Database**: PostgreSQL 18 running on port 5435.
 
 ## 🗄 Database Configuration
 The API supports **PostgreSQL**. Set the `DATABASE_URL` environment variable:

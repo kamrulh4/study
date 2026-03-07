@@ -110,10 +110,10 @@ The API uses **HttpBearer** authentication for all modification requests (POST, 
 
 ```bash
 # Get Universities
-curl -X GET http://127.0.0.1:8000/api/v1/universities
+curl -X GET http://localhost:8001/api/v1/universities
 
 # Create University (Requires Auth)
-curl -X POST http://127.0.0.1:8000/api/v1/universities \
+curl -X POST http://localhost:8001/api/v1/universities \
      -H "Authorization: Bearer ninja-token-2024" \
      -H "Content-Type: application/json" \
      -d '{"name": "Oxford", "country": "UK", "city": "Oxford"}'

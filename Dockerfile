@@ -1,5 +1,5 @@
 # Stage 1: Build
-FROM python:3.12-slim AS builder
+FROM python:3.13-slim AS builder
 
 WORKDIR /app
 
@@ -16,7 +16,7 @@ RUN pip wheel --no-cache-dir --no-deps --wheel-dir /app/wheels -r requirements.t
 
 
 # Stage 2: Production
-FROM python:3.12-slim
+FROM python:3.13-slim
 
 WORKDIR /app
 
