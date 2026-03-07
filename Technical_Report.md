@@ -74,7 +74,7 @@ Initial Docker images were over 800MB and used older Python versions.
 | **RESTful CRUD** | Implemented `/universities` and `/rankings` with full GET, POST, PUT, DELETE. | 🟢 Ready |
 | **Database** | PostgreSQL 18 integration via Docker Compose and `DATABASE_URL`. | 🟢 Ready |
 | **Documentation** | Auto-generated Swagger documentation and Markdown-to-PDF ready manual. | 🟢 Ready |
-| **Data Source** | Integrated with data from Times Higher Education & QS World University Rankings. | 🟢 Ready |
+| **Data Source** | Integrated with authentic data from the **QS World University Rankings 2026** dataset. The API supports parsing complex CSV structures directly from public repositories. | 🟢 Ready |
 | **Dockerization** | Python 3.13 Multi-stage Dockerfile and Docker Compose provided. | 🟢 Ready |
 | **Authentication** | Bearer Token authentication for write operations. | 🟢 Ready |
 

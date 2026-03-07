@@ -10,9 +10,8 @@ This branch contains the **Django Ninja** implementation of the Project.
 
 ## 📥 Data Sources
 This project uses data derived from:
+- **QS World University Rankings 2026** ([Kaggle Dataset](https://www.kaggle.com/datasets/akashbommidi/2026-qs-world-university-rankings))
 - **Times Higher Education (THE)** World University Rankings.
-- **QS World University Rankings** (via Kaggle).
-- [Kaggle Dataset Link](https://www.kaggle.com/datasets/mylesoneill/world-university-rankings)
 
 ## 🐳 Launch with Docker Compose
 The easiest way to run the entire stack (App + DB) is using Docker Compose:
