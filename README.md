@@ -36,7 +36,6 @@ The API supports **PostgreSQL**. Set the `DATABASE_URL` environment variable:
 ## 📄 Project Documentation
 - **[Technical Report](Technical_Report.md)**: 5-page detailed architectural and design report.
 - **[API Documentation](API_Documentation.md)**: Full list of endpoints, schemas, and authentication.
-- **[Task List](file:///Users/kamrul/.gemini/antigravity/brain/296927a7-795f-4379-bd6a-7977710d92a5/task.md)**: Evolution of project tasks.
 
 > [!NOTE]
 > Per requirement, the `API_Documentation.md` should be converted to **PDF** for the final submission.
