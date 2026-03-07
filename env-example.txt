@@ -1,0 +1,4 @@
+DATABASE_URL=postgres://postgres:ZaRKS0LJVgH1xjZnV6jaISIFngrZdRxfANPGSpXYtQhtMeIX17rjTYl2FmIBjcXs@72.61.116.99:5434/postgres
+SECRET_KEY=django-insecure-co)3h-n&@(7+k2g--zd1@ntxb1*g61o*^(ydnr@1+@&3nsuf8g
+DEBUG=True
+ALLOWED_HOSTS=localhost,127.0.0.1,0.0.0.0

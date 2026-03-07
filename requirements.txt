@@ -1,7 +1,11 @@
-django
-djangorestframework
+django>=5.0
+django-ninja
+django-dotenv
 psycopg2-binary
-django-filter
-djangorestframework-simplejwt
-drf-spectacular
+dj-database-url
+gunicorn
+pydantic
+pydantic-settings
+pyshorteners
+python-dotenv
 python-dotenv

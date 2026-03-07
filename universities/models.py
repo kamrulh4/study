@@ -3,7 +3,7 @@ from django.db import models
 class University(models.Model):
     name = models.CharField(max_length=255)
     country = models.CharField(max_length=100)
-    city = models.CharField(max_length=100)
+    city = models.CharField(max_length=100, blank=True, null=True)
     website = models.URLField(max_length=255, blank=True, null=True)
     founded_year = models.IntegerField(blank=True, null=True)
     
