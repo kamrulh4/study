@@ -106,7 +106,14 @@ The API uses **HttpBearer** authentication for all modification requests (POST, 
 
 ---
 
-## 4. Example Usage (cURL)
+## 4. Data Sources
+This project uses data derived from:
+- **QS World University Rankings 2026** ([Kaggle Dataset](https://www.kaggle.com/datasets/akashbommidi/2026-qs-world-university-rankings))
+- **Times Higher Education (THE)** World University Rankings.
+
+---
+
+## 5. Example Usage (cURL)
 
 ```bash
 # Get Universities
