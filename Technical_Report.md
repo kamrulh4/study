@@ -60,6 +60,12 @@ Integrating with a remote production database required careful environment manag
 Initial Docker images were over 800MB due to build dependencies.
 **Solution**: Implemented a multi-stage build. The "builder" stage handles compilation of C-extensions (like `psycopg2`), while the "production" stage only includes the final binaries and required runtime libraries, resulting in a 40% reduction in image size.
 
+### 4.4 Scalability & Consistency (Addressing Large Datasets)
+As the university dataset grows, returning all records in a single request would be inefficient.
+- **Pagination**: Implemented `PageNumberPagination` for all list endpoints (`/universities`, `/rankings`). This ensures that the API only transmits a manageable subset of data (default: 50 items per page), drastically reducing bandwidth and latent performance issues.
+- **Global Error Handling**: To ensure the user and front-end clients receive predictable responses even during failures, a global exception handler was implemented. All errors now follow a standard JSON schema: `{"error": true, "message": "...", "code": ...}`.
+- **Industry Standard Status Codes**: The API now specifically handles `Http404` (404 Not Found) and `ValidationError` (422 Unprocessable Entity), ensuring that client-side logic can accurately react to different failure states instead of receiving a generic 500 error.
+
 ---
 
 ## 5. Requirements Compliance Analysis
