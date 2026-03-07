@@ -1,6 +1,13 @@
-# University Ranking Web API (Ninja Branch)
+# University Ranking Web API
 
-This branch contains the **Django Ninja** implementation of the Project.
+### Project Progress
+- **V1 (DRF)**: Initial prototyping with Django REST Framework.
+- **V2 (Ninja)**: Migrated to Django Ninja for performance and type safety (Final Version).
+- **Data Integration**: Successfully integrated QS World University Rankings 2026 dataset (1,501 entries).
+- **Infrastructure**: Fully Dockerized with PostgreSQL 18 and automated Healthchecks.
+
+### Source Control
+- **main**: Current production-ready codebase (Django Ninja).
 
 ## 🛠 Tech Stack
 - **Django 6.0**: Modern core framework.

@@ -1,7 +1,7 @@
 # Project Technical Report: University Ranking Web API
 
 ## 1. Introduction
-The "University Ranking Web API" is a robust, data-driven platform designed to manage and query global university ranking data. This project was developed as a comprehensive response to the requirements for a RESTful API integrated with a PostgreSQL database, utilizing modern Python-based web technologies. The core objective was to create a scalable, secure, and well-documented system that provides seamless CRUD (Create, Read, Update, Delete) operations over complex datasets derived from public sources like Kaggle.
+The "University Ranking Web API" is a robust, data-driven platform designed to manage and query global university ranking data. This project was developed as a comprehensive response to the requirements for a RESTful API integrated with a PostgreSQL database, utilizing modern Python-based web technologies. The core objective was to create a scalable, secure, and well-documented system that provides seamless CRUD (Create, Read, Update, Delete) operations over complex datasets derived from public sources like Kaggle. The final implementation leverages **Django Ninja** for modern, type-safe API development.
 
 ---
 
